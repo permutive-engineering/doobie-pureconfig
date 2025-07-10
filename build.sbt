@@ -21,6 +21,6 @@ lazy val `doobie-pureconfig` = module
 // Dependencies //
 //////////////////
 
-def `pureconfig-generic-scala3` = "com.github.pureconfig" %% "pureconfig-generic-scala3" % "0.17.7"
+def `pureconfig-generic-scala3` = "com.github.pureconfig" %% "pureconfig-generic-scala3" % "0.17.9"
 
 def `pureconfig-generic` = "com.github.pureconfig" %% "pureconfig-generic" % "0.17.9"
