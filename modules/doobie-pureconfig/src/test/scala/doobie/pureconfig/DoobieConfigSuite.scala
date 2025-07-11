@@ -21,7 +21,6 @@ import scala.concurrent.duration._
 import cats.syntax.all._
 
 import doobie.enumerated.TransactionIsolation
-import doobie.hikari.Config
 import munit.FunSuite
 import pureconfig.ConfigSource
 
@@ -37,7 +36,7 @@ class DoobieConfigSuite extends FunSuite {
     val config = ConfigSource.string(hocon).loadOrThrow[DoobieConfig]
 
     val expected = DoobieConfig(
-      settings = Config(
+      settings = DoobieConfig.Hikari(
         jdbcUrl = "jdbc:postgresql://localhost:5001/foo", catalog = None, connectionTimeout = 30.seconds,
         idleTimeout = 10.minutes, leakDetectionThreshold = Duration.Zero, maximumPoolSize = 10,
         maxLifetime = 30.minutes, minimumIdle = 10, password = None, poolName = None, username = None,
@@ -92,7 +91,7 @@ class DoobieConfigSuite extends FunSuite {
     val config = ConfigSource.string(hocon).loadOrThrow[DoobieConfig]
 
     val expected = DoobieConfig(
-      settings = Config(
+      settings = DoobieConfig.Hikari(
         jdbcUrl = "jdbc:postgresql://localhost:5001/foo", catalog = "catalog".some, connectionTimeout = 1.minute,
         idleTimeout = 2.minutes, leakDetectionThreshold = 3.minutes, maximumPoolSize = 20, maxLifetime = 4.minutes,
         minimumIdle = 5, password = "password".some, poolName = "poolName".some, username = "username".some,
@@ -126,7 +125,7 @@ class DoobieConfigSuite extends FunSuite {
     val config = ConfigSource.string(hocon).loadOrThrow[DoobieConfig]
 
     val expected = DoobieConfig(
-      settings = Config("jdbc:postgresql://localhost:5001/foo"),
+      settings = DoobieConfig.Hikari("jdbc:postgresql://localhost:5001/foo"),
       dataSourceProperties = Some(
         new java.util.Properties {
           put("firstProperty", "firstValue")

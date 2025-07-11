@@ -22,10 +22,8 @@ import cats.syntax.all._
 
 import _root_.pureconfig.ConfigReader
 import _root_.pureconfig.error.CannotConvert
-import _root_.pureconfig.generic.semiauto.deriveReader
 import doobie.enumerated.TransactionIsolation
 import doobie.enumerated.TransactionIsolation._
-import doobie.hikari.Config
 
 package object pureconfig {
 
@@ -47,7 +45,5 @@ package object pureconfig {
           entries.forEach(e => Option(e.getValue().unwrapped()).foreach(value => put(e.getKey(), value.toString)))
         }
       )
-
-  implicit val HikariConfigConfigReader: ConfigReader[Config] = deriveReader
 
 }

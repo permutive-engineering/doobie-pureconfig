@@ -20,11 +20,14 @@ import java.util.Properties
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ThreadFactory
 
+import scala.concurrent.duration._
+
 import cats.effect.kernel.Sync
 import cats.syntax.all._
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.metrics.MetricsTrackerFactory
+import doobie.enumerated.TransactionIsolation
 import doobie.hikari.Config
 import javax.sql.DataSource
 import pureconfig.ConfigReader
@@ -36,7 +39,7 @@ import pureconfig.generic.semiauto.deriveReader
   * `doobie.hikari.HikariTransactor`. See the method `HikariTransactor.fromHikariConfig`
   */
 final case class DoobieConfig(
-    settings: Config,
+    settings: DoobieConfig.Hikari,
     dataSourceProperties: Option[Properties] = None
 ) {
 
@@ -79,14 +82,55 @@ final case class DoobieConfig(
         }.some
 
     Config.makeHikariConfig[F](
-      settings, dataSource, newDataSourceProperties, healthCheckProperties, healthCheckRegistry, metricRegistry,
-      metricsTrackerFactory, scheduledExecutor, threadFactory
+      settings.asHikariConfig, dataSource, newDataSourceProperties, healthCheckProperties, healthCheckRegistry,
+      metricRegistry, metricsTrackerFactory, scheduledExecutor, threadFactory
     )
   }
 
 }
 
 object DoobieConfig {
+
+  final case class Hikari(
+      jdbcUrl: String,
+      catalog: Option[String] = None,
+      connectionTimeout: Duration = 30.seconds,
+      idleTimeout: Duration = 10.minutes,
+      leakDetectionThreshold: Duration = Duration.Zero,
+      maximumPoolSize: Int = 10,
+      maxLifetime: Duration = 30.minutes,
+      minimumIdle: Int = 10,
+      password: Option[String] = None,
+      poolName: Option[String] = None,
+      username: Option[String] = None,
+      validationTimeout: Duration = 5.seconds,
+      allowPoolSuspension: Boolean = false,
+      autoCommit: Boolean = true,
+      connectionInitSql: Option[String] = None,
+      connectionTestQuery: Option[String] = None,
+      dataSourceClassName: Option[String] = None,
+      dataSourceJNDI: Option[String] = None,
+      driverClassName: Option[String] = None,
+      initializationFailTimeout: Duration = 1.millisecond,
+      isolateInternalQueries: Boolean = false,
+      readOnly: Boolean = false,
+      registerMbeans: Boolean = false,
+      schema: Option[String] = None,
+      transactionIsolation: Option[TransactionIsolation] = None
+  ) {
+
+    def asHikariConfig: Config = Config(jdbcUrl, catalog, connectionTimeout, idleTimeout, leakDetectionThreshold,
+      maximumPoolSize, maxLifetime, minimumIdle, password, poolName, username, validationTimeout, allowPoolSuspension,
+      autoCommit, connectionInitSql, connectionTestQuery, dataSourceClassName, dataSourceJNDI, driverClassName,
+      initializationFailTimeout, isolateInternalQueries, readOnly, registerMbeans, schema, transactionIsolation)
+
+  }
+
+  object Hikari {
+
+    implicit val HikariConfigConfigReader: ConfigReader[Hikari] = deriveReader
+
+  }
 
   implicit val DoobieConfigConfigReader: ConfigReader[DoobieConfig] = deriveReader
 
