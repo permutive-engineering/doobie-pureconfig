@@ -20,17 +20,18 @@ import java.util.Properties
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ThreadFactory
 
+import scala.concurrent.duration._
+
 import cats.effect.kernel.Sync
 import cats.syntax.all._
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.metrics.MetricsTrackerFactory
+import doobie.enumerated.TransactionIsolation
 import doobie.hikari.Config
 import javax.sql.DataSource
 import pureconfig.ConfigReader
 import pureconfig.generic.semiauto.deriveReader
-import scala.concurrent.duration._
-import doobie.enumerated.TransactionIsolation
 
 /** Configuration case class for a Doobie Transactor.
   *
