@@ -11,7 +11,7 @@ Pureconfig instances for Doobie's Transactor settings
 Add the following line to your `build.sbt` file:
 
 ```sbt
-libraryDependencies += "com.permutive" %% "doobie-pureconfig" % "0.3.0"
+libraryDependencies += "com.permutive" %% "doobie-pureconfig" % "0.4.0"
 ```
 
 The library is published for Scala versions: `2.13` and `3`.
