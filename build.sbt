@@ -11,7 +11,7 @@ lazy val documentation = project.enablePlugins(MdocPlugin)
 
 lazy val `doobie-pureconfig` = module
   .settings(libraryDependencies += "org.typelevel" %% "doobie-core" % "1.0.0-RC13")
-  .settings(libraryDependencies += "org.tpolecat" %% "doobie-hikari" % "1.0.0-RC12")
+  .settings(libraryDependencies += "org.typelevel" %% "doobie-hikari" % "1.0.0-RC13")
   .settings(libraryDependencies ++= scalaVersion.value.on(3)(`pureconfig-generic-scala3`))
   .settings(libraryDependencies ++= scalaVersion.value.on(2)(`pureconfig-generic`))
   .settings(libraryDependencies += "org.typelevel" %% "munit-cats-effect" % "2.1.0" % Test)
