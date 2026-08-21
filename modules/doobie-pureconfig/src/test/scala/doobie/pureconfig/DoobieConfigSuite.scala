@@ -20,8 +20,8 @@ import scala.concurrent.duration._
 
 import cats.syntax.all._
 
-import doobie.enumerated.TransactionIsolation
 import munit.FunSuite
+import org.typelevel.doobie.enumerated.TransactionIsolation
 import pureconfig.ConfigSource
 
 class DoobieConfigSuite extends FunSuite {

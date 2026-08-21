@@ -27,9 +27,9 @@ import cats.syntax.all._
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.metrics.MetricsTrackerFactory
-import doobie.enumerated.TransactionIsolation
-import doobie.hikari.Config
 import javax.sql.DataSource
+import org.typelevel.doobie.enumerated.TransactionIsolation
+import org.typelevel.doobie.hikari.Config
 import pureconfig.ConfigReader
 import pureconfig.generic.semiauto.deriveReader
 
