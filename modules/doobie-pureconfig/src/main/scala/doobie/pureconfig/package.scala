@@ -22,8 +22,8 @@ import cats.syntax.all._
 
 import _root_.pureconfig.ConfigReader
 import _root_.pureconfig.error.CannotConvert
-import doobie.enumerated.TransactionIsolation
-import doobie.enumerated.TransactionIsolation._
+import org.typelevel.doobie.enumerated.TransactionIsolation
+import org.typelevel.doobie.enumerated.TransactionIsolation._
 
 package object pureconfig {
 
@@ -36,7 +36,6 @@ package object pureconfig {
     case unknown           => CannotConvert(unknown, "TransactionIsolation", "unknown value").asLeft
   }
 
-  @SuppressWarnings(Array("scalafix:Disable.toString"))
   implicit val PropertiesConfigReader: ConfigReader[Properties] = cursor =>
     cursor.asObjectCursor
       .map(_.objValue.toConfig.entrySet())
