@@ -1,5 +1,5 @@
 ThisBuild / scalaVersion           := "2.13.18"
-ThisBuild / crossScalaVersions     := Seq("2.13.18", "3.3.8")
+ThisBuild / crossScalaVersions     := Seq("2.13.18", "3.3.9")
 ThisBuild / organization           := "com.permutive"
 ThisBuild / versionPolicyIntention := Compatibility.BinaryAndSourceCompatible
 
@@ -10,17 +10,17 @@ addCommandAlias("ci-publish", "versionCheck; github; ci-release")
 lazy val documentation = project.enablePlugins(MdocPlugin)
 
 lazy val `doobie-pureconfig` = module
-  .settings(libraryDependencies += "org.typelevel" %% "doobie-core" % "1.0.0-RC13")
-  .settings(libraryDependencies += "org.typelevel" %% "doobie-hikari" % "1.0.0-RC13")
+  .settings(libraryDependencies += "org.typelevel" %% "doobie-core" % "1.0.0-RC14")
+  .settings(libraryDependencies += "org.typelevel" %% "doobie-hikari" % "1.0.0-RC14")
   .settings(libraryDependencies ++= scalaVersion.value.on(3)(`pureconfig-generic-scala3`))
   .settings(libraryDependencies ++= scalaVersion.value.on(2)(`pureconfig-generic`))
-  .settings(libraryDependencies += "org.typelevel" %% "munit-cats-effect" % "2.2.0" % Test)
+  .settings(libraryDependencies += "org.typelevel" %% "munit-cats-effect" % "2.2.1" % Test)
   .settings(Test / fork := true)
 
 //////////////////
 // Dependencies //
 //////////////////
 
-def `pureconfig-generic-scala3` = "com.github.pureconfig" %% "pureconfig-generic-scala3" % "0.17.10"
+def `pureconfig-generic-scala3` = "com.github.pureconfig" %% "pureconfig-generic-scala3" % "0.17.11"
 
-def `pureconfig-generic` = "com.github.pureconfig" %% "pureconfig-generic" % "0.17.10"
+def `pureconfig-generic` = "com.github.pureconfig" %% "pureconfig-generic" % "0.17.11"
